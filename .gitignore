@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configuração e Chaves Privadas (proteção de API Keys)
+data/config.json
+.env
+
+# Cache de áudios sintetizados
+data/audio_cache/
+
+# Capturas de tela locais
+screenshots/*.png
+!screenshots/.gitkeep
+
+# Ambientes virtuais
+.venv/
+venv/
+ENV/
+
+# Logs e arquivos temporários
+*.log
+scratch/

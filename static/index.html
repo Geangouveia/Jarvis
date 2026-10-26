@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J.A.R.V.I.S. // Stark Industries OS</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/static/css/jarvis.css" />
+</head>
+<body>
+  <!-- Ambient High-Tech Background -->
+  <div class="hologram-grid"></div>
+  <div class="vignette-overlay"></div>
+  <canvas id="bg-particles"></canvas>
+
+  <div class="jarvis-container">
+    
+    <!-- TOP HEADER -->
+    <header class="jarvis-header">
+      <div class="header-left">
+        <div class="stark-badge">
+          <span class="stark-logo">STARK</span>
+          <span class="ind-text">INDUSTRIES</span>
+        </div>
+        <div class="header-divider"></div>
+        <div class="protocol-status">
+          <span class="dot-pulse"></span>
+          <span class="protocol-title">SISTEMA: MARK VII</span>
+          <span class="protocol-sub">// PROTOCOLO ATIVO</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <h1 class="hud-main-title">J . A . R . V . I . S .</h1>
+        <div class="hud-subtitle">JUST A RATHER VERY INTELLIGENT SYSTEM</div>
+      </div>
+
+      <div class="header-right">
+        <div class="clock-widget">
+          <span id="hud-clock">00:00:00</span>
+          <span id="hud-date">CARREGANDO...</span>
+        </div>
+        <button id="btn-open-settings" class="icon-hud-btn" title="Configurações do Sistema">
+          <i data-lucide="settings"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN HUD WORKSPACE -->
+    <main class="hud-workspace">
+      
+      <!-- LEFT PANEL: SYSTEM TELEMETRY -->
+      <aside class="hud-panel panel-left">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <i data-lucide="cpu" class="panel-icon"></i>
+            <span class="panel-title">TELEMETRIA DO SISTEMA</span>
+          </div>
+          <span class="panel-tag">REALTIME</span>
+        </div>
+
+        <div class="telemetry-gauges">
+          <!-- CPU Gauge -->
+          <div class="gauge-card">
+            <div class="gauge-svg-wrap">
+              <svg viewBox="0 0 100 100" class="circular-chart cyan">
+                <path class="circle-bg" d="M 50,50 m 0,-40 a 40,40 0 1 1 0,80 a 40,40 0 1 1 0,-80" />
+                <path id="cpu-gauge-bar" class="circle" stroke-dasharray="0, 100" d="M 50,50 m 0,-40 a 40,40 0 1 1 0,80 a 40,40 0 1 1 0,-80" />
+              </svg>
+              <div class="gauge-center-text">
+                <span id="cpu-val" class="gauge-number">0</span>
+                <span class="gauge-unit">%</span>
+              </div>
+            </div>
+            <div class="gauge-info">
+              <span class="gauge-label">PROCESSADOR</span>
+              <span id="cpu-detail" class="gauge-sub">Carregando...</span>
+            </div>
+          </div>
+
+          <!-- RAM Gauge -->
+          <div class="gauge-card">
+            <div class="gauge-svg-wrap">
+              <svg viewBox="0 0 100 100" class="circular-chart gold">
+                <path class="circle-bg" d="M 50,50 m 0,-40 a 40,40 0 1 1 0,80 a 40,40 0 1 1 0,-80" />
+                <path id="ram-gauge-bar" class="circle" stroke-dasharray="0, 100" d="M 50,50 m 0,-40 a 40,40 0 1 1 0,80 a 40,40 0 1 1 0,-80" />
+              </svg>
+              <div class="gauge-center-text">
+                <span id="ram-val" class="gauge-number">0</span>
+                <span class="gauge-unit">%</span>
+              </div>
+            </div>
+            <div class="gauge-info">
+              <span class="gauge-label">MEMÓRIA RAM</span>
+              <span id="ram-detail" class="gauge-sub">Carregando...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Stats Grid -->
+        <div class="stats-data-grid">
+          <div class="stat-pill">
+            <i data-lucide="hard-drive" class="stat-icon"></i>
+            <div class="stat-meta">
+              <span class="stat-label">DISCO C:</span>
+              <span id="disk-val" class="stat-value">-- GB Livres</span>
+            </div>
+          </div>
+          <div class="stat-pill">
+            <i data-lucide="battery-charging" class="stat-icon"></i>
+            <div class="stat-meta">
+              <span class="stat-label">ENERGIA</span>
+              <span id="battery-val" class="stat-value">Conectado (AC)</span>
+            </div>
+          </div>
+          <div class="stat-pill">
+            <i data-lucide="clock" class="stat-icon"></i>
+            <div class="stat-meta">
+              <span class="stat-label">UPTIME</span>
+              <span id="uptime-val" class="stat-value">-- h</span>
+            </div>
+          </div>
+          <div class="stat-pill">
+            <i data-lucide="sparkles" class="stat-icon"></i>
+            <div class="stat-meta">
+              <span class="stat-label">CÉREBRO IA</span>
+              <span id="ai-status-val" class="stat-value">Motor Local</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audio Frequency Realtime Waveform -->
+        <div class="audio-monitor-card">
+          <div class="monitor-header">
+            <span class="monitor-title">FREQUÊNCIA DE ÁUDIO</span>
+            <span id="audio-state-tag" class="status-badge-sm">STANDBY</span>
+          </div>
+          <canvas id="waveform-canvas" width="300" height="70"></canvas>
+        </div>
+
+        <!-- Quick Notes Drawer Button -->
+        <button id="btn-toggle-notes" class="hud-action-card">
+          <div class="action-card-left">
+            <i data-lucide="file-text"></i>
+            <span>BLOCO DE NOTAS DO SENHOR</span>
+          </div>
+          <span id="notes-badge" class="counter-badge">0</span>
+        </button>
+      </aside>
+
+      <!-- CENTER: THE ARC REACTOR HUD -->
+      <section class="hud-center-stage">
+        
+        <div class="reactor-container">
+          <canvas id="arc-reactor-canvas" width="550" height="550"></canvas>
+          
+          <div class="reactor-core-info">
+            <div id="reactor-state-text" class="core-status">SISTEMA ONLINE</div>
+            <div id="reactor-transcript" class="core-subtext">Aguardando comando de voz...</div>
+          </div>
+        </div>
+
+        <!-- Hands-Free Voice Activation Prompt (fades when clicked) -->
+        <div id="mic-activation-overlay" class="mic-activate-banner" onclick="window.speechEngine && window.speechEngine.startContinuousMicrophone(); this.style.display='none';">
+          <i data-lucide="mic"></i>
+          <span>CLIQUE AQUI UMA VEZ PARA PERMITIR O MICROFONE (MÃOS LIVRES)</span>
+        </div>
+
+        <!-- Wake Word Detection Bar -->
+        <div class="wake-word-banner">
+          <div class="wake-indicator active" id="wake-indicator">
+            <span class="pulse-ring"></span>
+            <i data-lucide="mic" class="wake-icon"></i>
+          </div>
+          <div class="wake-text-group">
+            <span class="wake-primary">CONTROLE 100% POR VOZ (MÃOS LIVRES)</span>
+            <span class="wake-secondary">Fale naturalmente: "Jarvis, abra o YouTube", "Aumenta o volume", etc.</span>
+          </div>
+          <div class="continuous-switch-wrap">
+            <label class="switch">
+              <input type="checkbox" id="continuous-listen-toggle" checked />
+              <span class="slider round"></span>
+            </label>
+            <span class="switch-label">Escuta Contínua</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT PANEL: TERMINAL & ACTIONS -->
+      <aside class="hud-panel panel-right">
+        
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <i data-lucide="terminal" class="panel-icon"></i>
+            <span class="panel-title">TERMINAL DE COMANDOS</span>
+          </div>
+          <button id="btn-clear-log" class="text-hud-btn" title="Limpar Terminal">LIMPAR</button>
+        </div>
+
+        <!-- Terminal Log Feed -->
+        <div class="terminal-log-feed" id="terminal-feed">
+          <div class="log-entry log-system">
+            <span class="log-time">[SISTEMA]</span>
+            <span class="log-msg">Todos os módulos operacionais. J.A.R.V.I.S. pronto para receber instruções.</span>
+          </div>
+        </div>
+
+        <!-- Quick Action Commands -->
+        <div class="quick-commands-section">
+          <div class="quick-header">COMANDOS RÁPIDOS</div>
+          <div class="chips-container">
+            <button class="action-chip" data-cmd="status do sistema">
+              <i data-lucide="activity"></i> Status do PC
+            </button>
+            <button class="action-chip" data-cmd="aumentar volume">
+              <i data-lucide="volume-2"></i> Aumentar Som
+            </button>
+            <button class="action-chip" data-cmd="diminuir volume">
+              <i data-lucide="volume-1"></i> Abaixar Som
+            </button>
+            <button class="action-chip" data-cmd="tirar print">
+              <i data-lucide="camera"></i> Tirar Print
+            </button>
+            <button class="action-chip" data-cmd="abrir spotify">
+              <i data-lucide="music"></i> Abrir Spotify
+            </button>
+            <button class="action-chip" data-cmd="abrir calculadora">
+              <i data-lucide="calculator"></i> Calculadora
+            </button>
+            <button class="action-chip" data-cmd="abrir bloco de notas">
+              <i data-lucide="edit-3"></i> Bloco de Notas
+            </button>
+            <button class="action-chip" data-cmd="mostrar area de trabalho">
+              <i data-lucide="layout"></i> Área de Trabalho
+            </button>
+            <button class="action-chip" data-cmd="bloquear pc">
+              <i data-lucide="lock"></i> Bloquear PC
+            </button>
+            <button class="action-chip" data-cmd="limpar lixeira">
+              <i data-lucide="trash-2"></i> Limpar Lixeira
+            </button>
+          </div>
+        </div>
+
+      </aside>
+
+    </main>
+
+    <!-- BOTTOM CONTROL BAR -->
+    <footer class="hud-footer">
+      
+      <div class="footer-left-status">
+        <span class="status-indicator-dot online"></span>
+        <span id="connection-status-text">CONECTADO AO SERVIDOR LOCAL</span>
+      </div>
+
+      <!-- Main Input Bar -->
+      <div class="hud-input-group">
+        
+        <!-- Big Pulsing Microphone Button -->
+        <button id="btn-mic-toggle" class="mic-orb-button" title="Ativar Microfone (Atalho: Espaço ou Clique)">
+          <div class="orb-pulse-ring"></div>
+          <i data-lucide="mic" id="mic-icon"></i>
+        </button>
+
+        <div class="text-input-wrapper">
+          <i data-lucide="chevron-right" class="input-arrow"></i>
+          <input type="text" id="command-input" placeholder="Digite uma ordem para o Jarvis ou fale pelo microfone..." autocomplete="off" />
+          <button id="btn-send-command" class="send-hud-btn" title="Enviar Comando">
+            <i data-lucide="send"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="footer-right-tools">
+        <button id="btn-test-voice" class="icon-hud-btn" title="Testar Voz do Jarvis">
+          <i data-lucide="volume-2"></i>
+        </button>
+        <button id="btn-view-screenshots" class="icon-hud-btn" title="Galeria de Screenshots">
+          <i data-lucide="image"></i>
+        </button>
+      </div>
+
+    </footer>
+
+  </div>
+
+  <!-- MODAL: SETTINGS -->
+  <div id="settings-modal" class="hud-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="sliders"></i>
+          <span>CONFIGURAÇÕES DE SISTEMA</span>
+        </div>
+        <button id="btn-close-settings" class="modal-close">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Gemini API Key -->
+        <div class="form-group">
+          <label class="form-label" for="cfg-gemini-key">
+            <span>CHAVE DE API GOOGLE GEMINI (OPCIONAL)</span>
+            <span class="badge-optional">Raciocínio IA</span>
+          </label>
+          <input type="password" id="cfg-gemini-key" class="hud-form-input" placeholder="Cole sua chave da API Gemini aqui..." />
+          <small class="form-hint">O Jarvis já funciona 100% offline para comandos de PC. Com o Gemini, ele passa a raciocinar sobre qualquer assunto com inteligência artificial.</small>
+        </div>
+
+        <!-- Voice Selection -->
+        <div class="form-group">
+          <label class="form-label" for="cfg-voice-select">VOZ NEURAL DO JARVIS</label>
+          <select id="cfg-voice-select" class="hud-form-select">
+            <option value="pt-BR-AntonioNeural">Antônio Neural (Português BR - Jarvis Clássico)</option>
+            <option value="pt-BR-FranciscaNeural">Francisca Neural (Português BR - Feminino Formal)</option>
+            <option value="pt-BR-ThalitaMultilingualNeural">Thalita Neural (Português BR - Expressiva)</option>
+            <option value="en-GB-RyanNeural">Ryan Neural (Inglês Britânico - Mordomo Stark)</option>
+            <option value="en-US-BrianNeural">Brian Neural (Inglês Americano)</option>
+          </select>
+        </div>
+
+        <!-- User Greeting Name -->
+        <div class="form-group">
+          <label class="form-label" for="cfg-user-name">COMO O JARVIS DEVE TE CHAMAR</label>
+          <input type="text" id="cfg-user-name" class="hud-form-input" placeholder="Ex: Senhor, Tony, Gean..." />
+        </div>
+
+        <div class="modal-actions">
+          <button id="btn-save-settings" class="btn-primary-hud">
+            <i data-lucide="save"></i> SALVAR PROTOCOLOS
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: NOTES DRAWER -->
+  <div id="notes-modal" class="hud-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="bookmark"></i>
+          <span>ANOTAÇÕES & LEMBRETES</span>
+        </div>
+        <button id="btn-close-notes" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="add-note-box">
+          <input type="text" id="new-note-input" class="hud-form-input" placeholder="Digite uma nova anotação e aperte Enter..." />
+          <button id="btn-add-note" class="btn-primary-hud"><i data-lucide="plus"></i> ADICIONAR</button>
+        </div>
+        <div class="notes-list" id="notes-list-container">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SCREENSHOTS GALLERY -->
+  <div id="screenshots-modal" class="hud-modal">
+    <div class="modal-card modal-wide">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i data-lucide="image"></i>
+          <span>ARQUIVO DE CAPTURAS DE TELA</span>
+        </div>
+        <button id="btn-close-screenshots" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="screenshots-grid" id="screenshots-grid-container">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Player (Hidden) -->
+  <audio id="jarvis-audio-player" preload="auto"></audio>
+
+  <!-- Scripts -->
+  <script src="/static/js/hud_canvas.js"></script>
+  <script src="/static/js/speech.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
