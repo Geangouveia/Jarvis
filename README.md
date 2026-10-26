@@ -4,6 +4,25 @@ O **J.A.R.V.I.S.** foi transformado em um piloto operacional do seu computador: 
 
 ---
 
+## 🚀 Como Executar em Qualquer Outro Computador (1 Clique)
+
+Você pode rodar o Jarvis em qualquer máquina nova de duas formas ultra-rápidas:
+
+### Opção 1: Comando Único no PowerShell (Instalação e Execução 100% Automática)
+Em qualquer computador Windows, abra o **PowerShell** e cole o comando abaixo:
+
+```powershell
+irm https://raw.githubusercontent.com/Geangouveia/Jarvis/main/install.ps1 | iex
+```
+*(Ele baixa os arquivos sozinhos para a Área de Trabalho, instala e já abre o Jarvis rodando na hora!)*
+
+### Opção 2: Download Direto em 1 Clique (ZIP)
+👉 **[Clique aqui para Baixar o Jarvis.zip](https://github.com/Geangouveia/Jarvis/archive/refs/heads/main.zip)**
+1. Baixe o ZIP e extraia na sua Área de Trabalho.
+2. Dê um duplo clique no arquivo: `run_jarvis.bat`.
+
+---
+
 ## ⚡ Inicialização Automática ao Ligar o PC
 
 Para que o Jarvis inicie automaticamente sozinho toda vez que você ligar o computador:
